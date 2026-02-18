@@ -46,6 +46,7 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
+    environment: prod-env
     steps:
       - name: Deploy to Server via SSH
         uses: appleboy/ssh-action@master
