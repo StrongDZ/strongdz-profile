@@ -5,3 +5,4 @@ node_modules/
 .agents/
 simulate_history.py
 .git.bak/
+data/

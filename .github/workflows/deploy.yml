@@ -54,20 +54,28 @@ jobs:
           username: ${{ vars.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Pull the latest image
-            # Note: Ensure the image is public or you are logged in on the server
+            # Pull latest image
             docker pull ghcr.io/strongdz/strongdz-profile:latest
-            
-            # Stop and remove existing container
-            docker stop strongdz-profile || true
-            docker rm strongdz-profile || true
-            
-            # Run new container
-            docker run -d \
-              --name strongdz-profile \
-              -p 3000:3000 \
-              --restart unless-stopped \
-              ghcr.io/strongdz/strongdz-profile:latest
-            
-            # Cleanup unused images
+
+            # Create/Update docker-compose.yml on server
+            cat <<EOF > docker-compose.yml
+            services:
+              strongdz-profile:
+                image: ghcr.io/strongdz/strongdz-profile:latest
+                container_name: strongdz-profile
+                restart: always
+                ports:
+                  - "\${PORT}:3000"
+                volumes:
+                  - ./data:/app/data
+                environment:
+                  - DATABASE_URL=\${DATABASE_URL}
+                  - NEXTAUTH_SECRET=\${NEXTAUTH_SECRET}
+                  - NEXTAUTH_URL=\${NEXTAUTH_URL}
+            EOF
+
+            # Deploy using Docker Compose
+            # Ensure .env file exists on server with PORT, etc.
+            docker compose down
+            docker compose up -d
             docker image prune -f
