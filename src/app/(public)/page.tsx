@@ -18,6 +18,8 @@ async function getHomeData() {
   return { profile: profileData, featuredProjects, allTech };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const { profile: profileData, featuredProjects, allTech } = await getHomeData();
 

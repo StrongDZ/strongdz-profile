@@ -14,6 +14,8 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = 'force-dynamic';
+
 async function getProject(slug: string) {
   const [project] = await db.select().from(projects).where(eq(projects.slug, slug)).limit(1);
   return project;

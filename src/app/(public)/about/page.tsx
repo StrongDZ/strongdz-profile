@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   description: 'Learn more about my background, skills, and experience as a Full-stack Developer.',
 };
 
+export const dynamic = 'force-dynamic';
+
 async function getAboutData() {
   const [profileData] = await db.select().from(profile).limit(1);
   const experienceData = await db.select().from(experiences).orderBy(experiences.order);

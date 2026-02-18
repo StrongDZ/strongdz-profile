@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'Explore my portfolio of projects spanning full-stack development, Web3, and data engineering.',
 };
 
+export const dynamic = 'force-dynamic';
+
 async function getProjects() {
   return db.select().from(projects);
 }
