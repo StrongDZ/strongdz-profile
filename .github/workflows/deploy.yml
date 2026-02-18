@@ -67,6 +67,7 @@ jobs:
               --name strongdz-profile \
               -p 3000:3000 \
               --env-file ${{ env.IMAGE_NAME }}/.env \
+              -v ./data:/app/data \
               --restart unless-stopped \
               ghcr.io/strongdz/strongdz-profile:latest
             
