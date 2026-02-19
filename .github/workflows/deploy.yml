@@ -79,7 +79,7 @@ jobs:
             # Run new container
             docker run -d \
               --name strongdz-profile \
-              -p ${PORT:-3000}:3000 \
+              -p ${PORT:-3000}:${PORT:-3000} \
               --env-file .env \
               -e AUTH_TRUST_HOST=true \
               -v ./data:/app/data \
