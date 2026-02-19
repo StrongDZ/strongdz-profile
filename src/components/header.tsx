@@ -15,7 +15,12 @@ const navItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export function Header() {
+interface HeaderProps {
+  githubUrl?: string | null;
+  resumeUrl?: string | null;
+}
+
+export function Header({ githubUrl, resumeUrl }: HeaderProps) {
   const pathname = usePathname();
 
   return (
@@ -55,22 +60,26 @@ export function Header() {
         {/* Actions */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button asChild variant="ghost" size="icon" className="hidden sm:flex hover:text-primary transition-colors">
-            <a
-              href="https://github.com/hoanmanh04"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="h-4 w-4" />
-              <span className="sr-only">GitHub</span>
-            </a>
-          </Button>
-          <Button asChild size="sm" className="hidden sm:flex gap-2 neon-border">
-            <a href="#" download>
-              <Download className="h-4 w-4" />
-              <span className="font-mono text-xs">Resume</span>
-            </a>
-          </Button>
+          {githubUrl && (
+            <Button asChild variant="ghost" size="icon" className="hidden sm:flex hover:text-primary transition-colors">
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-4 w-4" />
+                <span className="sr-only">GitHub</span>
+              </a>
+            </Button>
+          )}
+          {resumeUrl && (
+            <Button asChild size="sm" className="hidden sm:flex gap-2 neon-border">
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                <span className="font-mono text-xs">Resume</span>
+              </a>
+            </Button>
+          )}
 
           {/* Mobile Menu */}
           <Sheet>
@@ -98,18 +107,22 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="border-t border-border/30 pt-4 flex items-center gap-2">
-                  <Button asChild variant="outline" size="sm" className="flex-1">
-                    <a href="https://github.com/hoanmanh04" target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4 mr-2" />
-                      GitHub
-                    </a>
-                  </Button>
-                  <Button asChild size="sm" className="flex-1 neon-border">
-                    <a href="#" download>
-                      <Download className="h-4 w-4 mr-2" />
-                      Resume
-                    </a>
-                  </Button>
+                  {githubUrl && (
+                    <Button asChild variant="outline" size="sm" className="flex-1">
+                      <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-4 w-4 mr-2" />
+                        GitHub
+                      </a>
+                    </Button>
+                  )}
+                  {resumeUrl && (
+                    <Button asChild size="sm" className="flex-1 neon-border">
+                      <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                        <Download className="h-4 w-4 mr-2" />
+                        Resume
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </div>
             </SheetContent>

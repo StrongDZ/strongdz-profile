@@ -22,3 +22,18 @@ export async function deleteMessage(id: number) {
     revalidatePath('/admin/messages');
     revalidatePath('/admin');
 }
+
+export async function sendMessage(formData: FormData) {
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+
+    if (!name || !email || !message) {
+        return { error: 'Please fill in all required fields.' };
+    }
+
+    await db.insert(messages).values({ name, email, subject, message });
+    revalidatePath('/admin/messages');
+    return { success: true };
+}
