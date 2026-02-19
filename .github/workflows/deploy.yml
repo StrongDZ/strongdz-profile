@@ -71,10 +71,15 @@ jobs:
             docker stop strongdz-profile || true
             docker rm strongdz-profile || true
 
+            # Load environment variables from .env to get PORT
+            if [ -f .env ]; then
+              export $(grep -v '^#' .env | xargs)
+            fi
+
             # Run new container
             docker run -d \
               --name strongdz-profile \
-              -p 3000:3000 \
+              -p ${PORT:-3000}:3000 \
               --env-file .env \
               -e AUTH_TRUST_HOST=true \
               -v ./data:/app/data \
